@@ -135,6 +135,7 @@ codegenTest(target = 6, jvm = 6, jdk = "JDK_18") {
 
         builder.inheritIO()
         builder.redirectErrorStream(true)
+//        builder.redirectOutput(buildDir.resolve("test-server.log"))
 
         logger.info("Starting JDK 6 server $executable")
         jdkProcess = builder.start()
