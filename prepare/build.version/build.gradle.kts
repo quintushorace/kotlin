@@ -34,7 +34,8 @@ val writeStdlibVersion by tasks.creating {
         replaceVersion(versionFile, """val CURRENT: KotlinVersion = KotlinVersion\((\d+, \d+, \d+)\)""") {
             val (major, minor, _, optPatch) = Regex("""^(\d+)\.(\d+)(\.(\d+))?""").find(kotlinVersion)?.destructured ?: error("Cannot parse current version $kotlinVersion")
             val newVersion = "$major, $minor, ${optPatch.takeIf { it.isNotEmpty() } ?: "0" }"
-            newVersion.also { logger.lifecycle("Writing new standard library version components: $it") }
+            logger.lifecycle("Writing new standard library version components: $newVersion")
+            newVersion
         }
     }
 }
@@ -45,7 +46,8 @@ val writeCompilerVersion by tasks.creating {
     outputs.file(versionFile)
     doLast {
         replaceVersion(versionFile, """public static final String VERSION = "([^"]+)"""") {
-            kotlinVersion.also { logger.lifecycle("Writing new compiler version: $it") }
+            logger.lifecycle("Writing new compiler version: $kotlinVersion")
+            kotlinVersion
         }
     }
 }
